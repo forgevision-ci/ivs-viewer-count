@@ -1,0 +1,6 @@
+*.ts
+tsconfig.json
+tsconfig.tsbuildinfo
+.eslintrc.json
+.prettierrc.json
+.prettierignore

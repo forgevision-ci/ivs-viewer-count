@@ -1,0 +1,28 @@
+{
+  "AttributeDefinitions": [
+    {
+      "AttributeName": "channel",
+      "AttributeType": "S"
+    },
+    {
+      "AttributeName": "time",
+      "AttributeType": "N"
+    }
+  ],
+  "TableName": "ivs-viewer-count",
+  "KeySchema": [
+    {
+      "AttributeName": "channel",
+      "KeyType": "HASH"
+    },
+    {
+      "AttributeName": "time",
+      "KeyType": "RANGE"
+    }
+  ],
+  "BillingMode": "PROVISIONED",
+  "ProvisionedThroughput": {
+    "ReadCapacityUnits": 5,
+    "WriteCapacityUnits": 5
+  }
+}

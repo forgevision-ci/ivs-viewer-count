@@ -1,0 +1,46 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  ivs-viewer-count
+
+  Sample SAM Template for ivs-viewer-count
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 180
+
+Parameters:
+  TableName:
+    Type: String
+    Default: ivs-viewer-count
+    Description: DynamoDB table name
+
+Resources:
+  MyFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: src/
+      Handler: app.handler
+      Runtime: nodejs12.x
+      Environment:
+        Variables:
+          NODE_OPTIONS: "--enable-source-maps"
+          TABLE_NAME: !Ref TableName
+      Policies:
+        - DynamoDBWritePolicy:
+            TableName: !Ref TableName
+        - Statement:
+            - Effect: Allow
+              Action:
+                - ivs:ListChannels
+                - ivs:ListStreams
+              Resource: "*"
+
+Outputs:
+  MyFunction:
+    Description: "My Lambda Function ARN"
+    Value: !GetAtt MyFunction.Arn
+  MyFunctionIamRole:
+    Description: "Implicit IAM Role created for my function"
+    Value: !GetAtt MyFunctionRole.Arn
